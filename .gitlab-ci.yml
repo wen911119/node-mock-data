@@ -1,0 +1,26 @@
+#### 需要gitlab-runner 以特权模式运行 ####
+stages:
+  - docker-build
+before_script:
+  - dockerservice=registry.cn-shanghai.aliyuncs.com/ruiyun2015/node-mock-data:`TZ=CST-8 date '+%Y%m%d-%H%M'`
+  - hostname -i
+  - whoami
+build_images:
+   stage: docker-build
+   # 国内镜像加速
+   image: registry.docker-cn.com/library/docker:latest
+   services:
+   # 国内镜像加速
+   - name: registry.docker-cn.com/library/docker:dind
+     # 需要设置别名,等于 --link 的别名
+     alias: docker
+   script:
+    - echo $image
+    - ls
+    - echo "Build Docker Image..."
+    - docker build --no-cache -t $dockerservice .
+    - docker login -u=771299231@qq.com -p registry@ruiyun registry.cn-shanghai.aliyuncs.com
+    - echo "Push Image:" $dockerservice " to repository..."
+    - docker push $dockerservice
+   only:
+    - master
