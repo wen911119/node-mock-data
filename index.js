@@ -12,7 +12,7 @@ app.post('/test', function (req, res) {
             avatar: faker.image.avatar()
         })
     }
-    res.json({ users });
+    res.json({ users:[] });
 });
 
 app.listen(3000, function () {
