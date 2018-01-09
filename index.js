@@ -3,7 +3,7 @@ var faker = require('faker');
 var app = express();
 
 app.post('/test', function (req, res) {
-    console.log('qqqqqqqqq')
+    console.log('wwwwww')
     let users = []
     for (let i = 0; i < 10; i++) {
         users.push({
